@@ -29,12 +29,13 @@ class filter_h5pdownload extends moodle_text_filter {
         global $PAGE;
 
         $h5purl = '(http[^ &<]*h5p)';
+        $ishvp = isset($PAGE->cm->modname) && $PAGE->cm->modname == 'hvp';
 
         if (!is_string($text) or empty($text)) {
             return $text; // Non string data or no H5P url don't need to be filtered.
         }
 
-        if (preg_match($h5purl, $text)) {
+        if (preg_match($h5purl, $text) or $ishvp) {
             $PAGE->requires->js_call_amd('filter_h5pdownload/h5pdownload', 'init', array(
                 'cfg' => array(
                     'backgroundColor' => get_config('filter_h5pdownload', 'backgroundcolor'),
@@ -43,7 +44,8 @@ class filter_h5pdownload extends moodle_text_filter {
                     'licenceName' => get_config('filter_h5pdownload', 'licence_name'),
                     'licenceShortname' => get_config('filter_h5pdownload', 'licence_shortname'),
                     'licenceUrl' => get_config('filter_h5pdownload', 'licence_url'),
-                    'reuseConditions' => get_config('filter_h5pdownload', 'reuse_conditions')
+                    'reuseConditions' => get_config('filter_h5pdownload', 'reuse_conditions'),
+                    'isHVP' => $ishvp
                 )
             ));
         }

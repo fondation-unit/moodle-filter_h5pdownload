@@ -10,7 +10,8 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
         licenceName = '',
         licenceShortname = '',
         licenceUrl = '',
-        reuseConditions = '';
+        reuseConditions = '',
+        modHVPexport = '';
 
     return {
         init: function(cfg) {
@@ -31,6 +32,16 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
             licenceUrl = cfg.licenceUrl;
             reuseConditions = cfg.reuseConditions;
 
+            // If the activity is mod_hvp
+            if (cfg.isHVP) {
+                const hvpobject = window.H5PIntegration;
+                const hvpcontents = Object.values(hvpobject['contents'])[0]
+                const exportUrl = hvpcontents['exportUrl'];
+                if (exportUrl) {
+                    modHVPexport = exportUrl;
+                }
+            }
+
             // Get the H5P DOM elements.
             $h5ps = $('.h5p-placeholder, .h5p-iframe-wrapper');
             $h5ps.each(function(index) {
@@ -42,18 +53,31 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
             const self = this;
             element.on("mouseenter", function() {
                 const src = element.find(".h5p-iframe").attr("src");
-                const h5pUrlPart = src.split("embed.php?url=")[1].split(".h5p")[0];
+                if (src.length > 0 && src != 'about:blank') {
+                    const h5pUrlPart = src.split("embed.php?url=")[1].split(".h5p")[0];
 
-                if (h5pUrlPart.length > 0) {
-                    const downloadLink = decodeURIComponent(h5pUrlPart) + ".h5p";
+                    if (h5pUrlPart.length > 0) {
+                        const downloadLink = decodeURIComponent(h5pUrlPart) + ".h5p";
 
+                        $openOverlay = $('<button class="h5p-download">').append(self.addImage('download', downloadText, 'icon'));
+                        $openOverlay.on('click', function() {
+                            self.createOverlay(downloadLink);
+                        });
+
+                        if (!element.find(".h5p-download").length) {
+                            element.append($openOverlay);
+                        }
+
+                        element.find(".h5p-download").fadeIn();
+                    }
+                } else if (modHVPexport != '') {
                     $openOverlay = $('<button class="h5p-download">').append(self.addImage('download', downloadText, 'icon'));
                     $openOverlay.on('click', function() {
-                        self.createOverlay(downloadLink);
+                        self.createOverlay(modHVPexport);
                     });
 
                     if (!element.find(".h5p-download").length) {
-                        element.append($openOverlay);
+                        element.prepend($openOverlay);
                     }
 
                     element.find(".h5p-download").fadeIn();
