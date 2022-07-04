@@ -96,18 +96,30 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
                 $('body').find('.download-overlay').remove();
             });
 
+            // Get the CC Licence if provided.
+            $cc = $('#cc-licence');
+
             const ccDiv = $('<div/>');
             ccDiv.attr('class', 'mt-2');
 
             const ccHref = $('<a/>');
-            ccHref.attr('href', licenceUrl);
             ccHref.attr('target', "_blank");
 
-            ccHref.append(this.addImage('cc/cc', 'CC image', 'modal-icon'));
-            ccHref.append(this.addImage('cc/by', 'BY image', 'modal-icon'));
-            ccHref.append(this.addImage('cc/nc', 'NC image', 'modal-icon'));
-            ccDiv.append(ccHref);
+            if ($cc && $cc.attr('href')) {
+                ccHref.attr('href', $cc.attr('href'));
+                $ccImage = $cc.find('img');
+                if ($ccImage) {
+                    ccHref.append(this.addImage('cc/cc', 'CC image', 'modal-icon', $ccImage.attr('src')));
+                }
+            } else {
+                ccHref.attr('href', licenceUrl);
+                ccHref.append(this.addImage('cc/cc', 'CC image', 'modal-icon'));
+                ccHref.append(this.addImage('cc/by', 'BY image', 'modal-icon'));
+                ccHref.append(this.addImage('cc/nc', 'NC image', 'modal-icon'));
+            }
 
+            // Append the CC link to the div.
+            ccDiv.append(ccHref);
 
             $copy = $('<button class="btn"></button>')
                 .on('click', function() { navigator.clipboard.writeText(licenceShortname) })
@@ -154,12 +166,15 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
             $('body').append($overlay);
         },
 
-        addImage: function(img, title, className) {
+        addImage: function(img, title, className, src=null) {
             const icon = $('<img/>');
             icon.attr('alt', title);
             icon.attr('title', title);
             icon.attr('class', className);
-            icon.attr('src', Url.imageUrl(img, 'filter_h5pdownload'));
+            icon.attr('src', src);
+            if (!src) {
+                icon.attr('src', Url.imageUrl(img, 'filter_h5pdownload'));
+            }
             return icon;
         }
     };
