@@ -41,8 +41,8 @@ class filter_h5pdownload extends moodle_text_filter {
                     'backgroundColor' => get_config('filter_h5pdownload', 'backgroundcolor'),
                     'textColor' => get_config('filter_h5pdownload', 'textcolor'),
                     'licenceIntro' => get_config('filter_h5pdownload', 'licence_intro'),
+                    'licenceTarget' => get_config('filter_h5pdownload', 'licence_target'),
                     'licenceName' => get_config('filter_h5pdownload', 'licence_name'),
-                    'licenceShortname' => get_config('filter_h5pdownload', 'licence_shortname'),
                     'licenceUrl' => get_config('filter_h5pdownload', 'licence_url'),
                     'reuseConditions' => get_config('filter_h5pdownload', 'reuse_conditions'),
                     'isHVP' => $ishvp

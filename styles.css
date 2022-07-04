@@ -17,6 +17,12 @@
     display: none;
 }
 
+.h5p-download .icon {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 .h5p-download:hover {
     transform: scale(1.15);
     background-color: #3c93f0;
@@ -110,6 +116,11 @@
     padding-right: 40px;
 }
 
+.download-modal .content .column .licence-image {
+    max-height: 40px;
+    width: auto;
+}
+
 .download-modal .content .column .licence {
     display: flex;
     justify-content: flex-start;
@@ -122,6 +133,10 @@
 .download-modal .content .column .licence .btn {
     margin-left: auto;
     background: none;
+}
+
+.download-modal .content .column .licence > * {
+    align-self: center;
 }
 
 .download-modal .content .column .mt-2 {

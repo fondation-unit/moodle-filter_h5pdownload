@@ -7,8 +7,8 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
         copyText = 'Copy',
         closeText = 'Close',
         licenceIntro = '',
+        licenceTarget = '',
         licenceName = '',
-        licenceShortname = '',
         licenceUrl = '',
         reuseConditions = '',
         modHVPexport = '';
@@ -27,8 +27,8 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
             bgColor = cfg.backgroundColor;
             txtColor = cfg.textColor;
             licenceIntro = cfg.licenceIntro;
+            licenceTarget = cfg.licenceTarget;
             licenceName = cfg.licenceName;
-            licenceShortname = cfg.licenceShortname;
             licenceUrl = cfg.licenceUrl;
             reuseConditions = cfg.reuseConditions;
 
@@ -100,17 +100,34 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
             ccDiv.attr('class', 'mt-2');
 
             const ccHref = $('<a/>');
-            ccHref.attr('href', licenceUrl);
             ccHref.attr('target', "_blank");
 
-            ccHref.append(this.addImage('cc/cc', 'CC image', 'modal-icon'));
-            ccHref.append(this.addImage('cc/by', 'BY image', 'modal-icon'));
-            ccHref.append(this.addImage('cc/nc', 'NC image', 'modal-icon'));
+            if (licenceTarget) {
+                // Get the CC Licence if provided.
+                $cc = $('#' + licenceTarget);
+                if ($cc && $cc.attr('href')) {
+                    // Get the licence name.
+                    licenceName = $cc.data('name');
+                    ccHref.attr('href', $cc.attr('href'));
+                    // Get the licence image.
+                    $ccImage = $cc.find('img');
+                    if ($ccImage) {
+                        ccHref.append(this.addImage('cc/cc', 'CC image', 'licence-image', $ccImage.attr('src')));
+                    }
+                }
+            } else {
+                // Use the filter settings values.
+                ccHref.attr('href', licenceUrl);
+                ccHref.append(this.addImage('cc/cc', 'CC image', 'modal-icon'));
+                ccHref.append(this.addImage('cc/by', 'BY image', 'modal-icon'));
+                ccHref.append(this.addImage('cc/nc', 'NC image', 'modal-icon'));
+            }
+
+            // Append the CC link to the div.
             ccDiv.append(ccHref);
 
-
             $copy = $('<button class="btn"></button>')
-                .on('click', function() { navigator.clipboard.writeText(licenceShortname) })
+                .on('click', function() { navigator.clipboard.writeText(licenceName) })
                 .prepend(this.addImage('copy', copyText, 'icon'));
 
             let $column1Html1 = $('<p>', {
@@ -120,7 +137,7 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
             let $licenceArea = $('<div>', {
                 class: "licence",
                 style: "background-color:"+ bgColor +";color:"+ txtColor,
-                html: '<span>' + licenceToUse + ' : ' + licenceShortname + '</span>'
+                html: '<span>' + licenceToUse + ' : ' + licenceName + '</span>'
             }).append($copy);
         
             let $column1Html2 = $('<p>', {
@@ -154,12 +171,15 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
             $('body').append($overlay);
         },
 
-        addImage: function(img, title, className) {
+        addImage: function(img, title, className, src=null) {
             const icon = $('<img/>');
             icon.attr('alt', title);
             icon.attr('title', title);
             icon.attr('class', className);
-            icon.attr('src', Url.imageUrl(img, 'filter_h5pdownload'));
+            icon.attr('src', src);
+            if (!src) {
+                icon.attr('src', Url.imageUrl(img, 'filter_h5pdownload'));
+            }
             return icon;
         }
     };

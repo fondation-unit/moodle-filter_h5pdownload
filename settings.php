@@ -25,6 +25,8 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
+    $default_target_id = 'block_punchy-cc-licence';
+
     // Licence area background color
     $name = 'filter_h5pdownload/backgroundcolor';
     $title = get_string('settings:backgroundcolor', 'filter_h5pdownload');
@@ -48,18 +50,19 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtext($name, $title, null, $default, PARAM_TEXT);
     $settings->add($setting);
 
+    // Grab licence from block_punchy plugin
+    $name = 'filter_h5pdownload/licence_target';
+    $title = get_string('settings:licence_target', 'filter_h5pdownload');
+    $desc = get_string('settings:licence_target', 'filter_h5pdownload');
+    $setting = new admin_setting_configtext($name, $title, $desc, $default_target_id, PARAM_TEXT);
+    $settings->add($setting);
+
     // Licence name
     $name = 'filter_h5pdownload/licence_name';
     $title = get_string('settings:licence_name', 'filter_h5pdownload');
+    $desc = get_string('settings:licence_name', 'filter_h5pdownload');
     $default = get_string('settings:licence_name_default', 'filter_h5pdownload');
-    $setting = new admin_setting_configtext($name, $title, null, $default, PARAM_TEXT);
-    $settings->add($setting);
-
-    // Licence shortname
-    $name = 'filter_h5pdownload/licence_shortname';
-    $title = get_string('settings:licence_shortname', 'filter_h5pdownload');
-    $default = get_string('settings:licence_shortname_default', 'filter_h5pdownload');
-    $setting = new admin_setting_configtext($name, $title, null, $default, PARAM_TEXT);
+    $setting = new admin_setting_configtext($name, $title, $desc, $default, PARAM_TEXT);
     $settings->add($setting);
 
     // Conditons of reuse
