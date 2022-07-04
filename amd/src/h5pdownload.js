@@ -7,6 +7,7 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
         copyText = 'Copy',
         closeText = 'Close',
         licenceIntro = '',
+        licenceTarget = '',
         licenceName = '',
         licenceShortname = '',
         licenceUrl = '',
@@ -27,6 +28,7 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
             bgColor = cfg.backgroundColor;
             txtColor = cfg.textColor;
             licenceIntro = cfg.licenceIntro;
+            licenceTarget = cfg.licenceTarget;
             licenceName = cfg.licenceName;
             licenceShortname = cfg.licenceShortname;
             licenceUrl = cfg.licenceUrl;
@@ -96,22 +98,27 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
                 $('body').find('.download-overlay').remove();
             });
 
-            // Get the CC Licence if provided.
-            $cc = $('#cc-licence');
-
             const ccDiv = $('<div/>');
             ccDiv.attr('class', 'mt-2');
 
             const ccHref = $('<a/>');
             ccHref.attr('target', "_blank");
 
-            if ($cc && $cc.attr('href')) {
-                ccHref.attr('href', $cc.attr('href'));
-                $ccImage = $cc.find('img');
-                if ($ccImage) {
-                    ccHref.append(this.addImage('cc/cc', 'CC image', 'modal-icon', $ccImage.attr('src')));
+            if (licenceTarget) {
+                // Get the CC Licence if provided.
+                $cc = $('#' + licenceTarget);
+                if ($cc && $cc.attr('href')) {
+                    // Get the licence name.
+                    licenceName = $cc.data('name');
+                    ccHref.attr('href', $cc.attr('href'));
+                    // Get the licence image.
+                    $ccImage = $cc.find('img');
+                    if ($ccImage) {
+                        ccHref.append(this.addImage('cc/cc', 'CC image', 'licence-image', $ccImage.attr('src')));
+                    }
                 }
             } else {
+                // Use the filter settings values.
                 ccHref.attr('href', licenceUrl);
                 ccHref.append(this.addImage('cc/cc', 'CC image', 'modal-icon'));
                 ccHref.append(this.addImage('cc/by', 'BY image', 'modal-icon'));

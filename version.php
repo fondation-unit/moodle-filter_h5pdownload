@@ -24,6 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2022020600;
+$plugin->version   = 2022070401;
 $plugin->requires  = 2020061500;
 $plugin->component = 'filter_h5pdownload';
