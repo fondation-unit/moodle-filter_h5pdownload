@@ -65,13 +65,6 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtext($name, $title, $desc, $default, PARAM_TEXT);
     $settings->add($setting);
 
-    // Licence shortname
-    $name = 'filter_h5pdownload/licence_shortname';
-    $title = get_string('settings:licence_shortname', 'filter_h5pdownload');
-    $default = get_string('settings:licence_shortname_default', 'filter_h5pdownload');
-    $setting = new admin_setting_configtext($name, $title, null, $default, PARAM_TEXT);
-    $settings->add($setting);
-
     // Conditons of reuse
     $name = 'filter_h5pdownload/reuse_conditions';
     $title = get_string('settings:reuse_conditions', 'filter_h5pdownload');

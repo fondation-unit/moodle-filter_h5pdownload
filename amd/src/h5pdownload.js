@@ -9,7 +9,6 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
         licenceIntro = '',
         licenceTarget = '',
         licenceName = '',
-        licenceShortname = '',
         licenceUrl = '',
         reuseConditions = '',
         modHVPexport = '';
@@ -30,7 +29,6 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
             licenceIntro = cfg.licenceIntro;
             licenceTarget = cfg.licenceTarget;
             licenceName = cfg.licenceName;
-            licenceShortname = cfg.licenceShortname;
             licenceUrl = cfg.licenceUrl;
             reuseConditions = cfg.reuseConditions;
 
@@ -129,7 +127,7 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
             ccDiv.append(ccHref);
 
             $copy = $('<button class="btn"></button>')
-                .on('click', function() { navigator.clipboard.writeText(licenceShortname) })
+                .on('click', function() { navigator.clipboard.writeText(licenceName) })
                 .prepend(this.addImage('copy', copyText, 'icon'));
 
             let $column1Html1 = $('<p>', {
@@ -139,7 +137,7 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
             let $licenceArea = $('<div>', {
                 class: "licence",
                 style: "background-color:"+ bgColor +";color:"+ txtColor,
-                html: '<span>' + licenceToUse + ' : ' + licenceShortname + '</span>'
+                html: '<span>' + licenceToUse + ' : ' + licenceName + '</span>'
             }).append($copy);
         
             let $column1Html2 = $('<p>', {
