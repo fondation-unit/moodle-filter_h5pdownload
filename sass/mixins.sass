@@ -1,0 +1,9 @@
+@mixin d-flex($position)
+    display: flex
+    justify-content: $position
+
+@mixin bg-shadow($bgcolor, $shadowcolor, $radius: $border-radius)
+    background-color: $bgcolor
+    -moz-box-shadow: 0 0 $radius $shadowcolor
+    -webkit-box-shadow: 0 0 $radius $shadowcolor
+    box-shadow: 0 0 $radius $shadowcolor
