@@ -1,4 +1,5 @@
 .h5p-download
+    +bg-shadow($bg-color, $main-color)
     position: absolute
     display: none
     margin-top: 40px
@@ -7,20 +8,13 @@
     height: $btn-width
     text-align: center
     line-height: $btn-width
-    -moz-box-shadow: 0 0 $border-radius $main-color
-    -webkit-box-shadow: 0 0 $border-radius $main-color
-    box-shadow: 0 0 $border-radius $main-color
-    background: $bg-color
     border-radius: $border-radius
     border: none
     outline: 0
     transition: transform $duration linear, color $duration linear, background-color $duration linear, box-shadow $duration linear
     &:hover
+        +bg-shadow($btn-active-bg, $btn-shadow)
         transform: scale(1.15)
-        background-color: $btn-active-bg
-        -moz-box-shadow: 0 0 $border-radius $btn-shadow
-        -webkit-box-shadow: 0 0 $border-radius $btn-shadow
-        box-shadow: 0 0 $border-radius $btn-shadow
         outline: 0
         .icon 
             color: white
@@ -28,14 +22,13 @@
     &:focus
         outline: 0
     .icon
-        display: flex
-        justify-content: center
+        +d-flex(center)
         width: 100%
         margin: 0
     
 .download-overlay
+    +d-flex(center)
     position: fixed
-    display: flex
     left: 0
     top: 0
     width: 100%
@@ -43,13 +36,11 @@
     background: $overlay-bg
     z-index: 1000000
     opacity: 1
-    justify-content: center
     .close-modal
+        +d-flex(center)
         position: absolute
-        display: flex
         z-index: 5
         align-items: center
-        justify-content: center
         width: $btn-width
         height: $btn-width
         min-height: $btn-width
@@ -81,12 +72,11 @@
         padding-left: $modal-padding
         padding-right: $modal-padding
     .content
+        +d-flex(center)
         position: relative
-        display: flex
         width: 100%
-        justify-content: center
         .column
-            display: flex
+            +d-flex(normal)
             flex-direction: column
             flex-basis: 100%
             padding-left: $modal-padding
@@ -96,9 +86,8 @@
             .licence-image
                 max-height: 40px
                 width: auto
-            .licence 
-                display: flex
-                justify-content: flex-start
+            .licence
+                +d-flex(flex-start)
                 width: 100%
                 background: $bg-color
                 padding: 8px 16px

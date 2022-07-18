@@ -1,4 +1,8 @@
 .h5p-download {
+  background-color: #f0f1fc;
+  -moz-box-shadow: 0 0 3px #1a237e;
+  -webkit-box-shadow: 0 0 3px #1a237e;
+  box-shadow: 0 0 3px #1a237e;
   position: absolute;
   display: none;
   margin-top: 40px;
@@ -7,21 +11,17 @@
   height: 43px;
   text-align: center;
   line-height: 43px;
-  -moz-box-shadow: 0 0 3px #1a237e;
-  -webkit-box-shadow: 0 0 3px #1a237e;
-  box-shadow: 0 0 3px #1a237e;
-  background: #f0f1fc;
   border-radius: 3px;
   border: none;
   outline: 0;
   transition: transform 0.2s linear, color 0.2s linear, background-color 0.2s linear, box-shadow 0.2s linear;
 }
 .h5p-download:hover {
-  transform: scale(1.15);
   background-color: #3c93f0;
   -moz-box-shadow: 0 0 3px #76bbff;
   -webkit-box-shadow: 0 0 3px #76bbff;
   box-shadow: 0 0 3px #76bbff;
+  transform: scale(1.15);
   outline: 0;
 }
 .h5p-download:hover .icon {
@@ -39,8 +39,9 @@
 }
 
 .download-overlay {
-  position: fixed;
   display: flex;
+  justify-content: center;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
@@ -48,14 +49,13 @@
   background: rgba(29, 29, 29, 0.3);
   z-index: 1000000;
   opacity: 1;
-  justify-content: center;
 }
 .download-overlay .close-modal {
-  position: absolute;
   display: flex;
+  justify-content: center;
+  position: absolute;
   z-index: 5;
   align-items: center;
-  justify-content: center;
   width: 43px;
   height: 43px;
   min-height: 43px;
@@ -91,13 +91,14 @@
   padding-right: 40px;
 }
 .download-modal .content {
-  position: relative;
   display: flex;
-  width: 100%;
   justify-content: center;
+  position: relative;
+  width: 100%;
 }
 .download-modal .content .column {
   display: flex;
+  justify-content: normal;
   flex-direction: column;
   flex-basis: 100%;
   padding-left: 40px;
