@@ -1,0 +1,122 @@
+.h5p-download
+    position: absolute
+    display: none
+    margin-top: 40px
+    right: 50px
+    width: $btn-width
+    height: $btn-width
+    text-align: center
+    line-height: $btn-width
+    -moz-box-shadow: 0 0 $border-radius $main-color
+    -webkit-box-shadow: 0 0 $border-radius $main-color
+    box-shadow: 0 0 $border-radius $main-color
+    background: $bg-color
+    border-radius: $border-radius
+    border: none
+    outline: 0
+    transition: transform $duration linear, color $duration linear, background-color $duration linear, box-shadow $duration linear
+    &:hover
+        transform: scale(1.15)
+        background-color: $btn-active-bg
+        -moz-box-shadow: 0 0 $border-radius $btn-shadow
+        -webkit-box-shadow: 0 0 $border-radius $btn-shadow
+        box-shadow: 0 0 $border-radius $btn-shadow
+        outline: 0
+        .icon 
+            color: white
+            filter: brightness(0) invert(1)
+    &:focus
+        outline: 0
+    .icon
+        display: flex
+        justify-content: center
+        width: 100%
+        margin: 0
+    
+.download-overlay
+    position: fixed
+    display: flex
+    left: 0
+    top: 0
+    width: 100%
+    height: 100vh
+    background: $overlay-bg
+    z-index: 1000000
+    opacity: 1
+    justify-content: center
+    .close-modal
+        position: absolute
+        display: flex
+        z-index: 5
+        align-items: center
+        justify-content: center
+        width: $btn-width
+        height: $btn-width
+        min-height: $btn-width
+        background-color: $btn-close
+        border-radius: 50%
+        border: 1px solid $btn-close-border
+        right: 0
+        top: 0
+        margin-top: 10px
+        margin-right: 10px
+        cursor: pointer
+        transition: all $duration ease-out
+        .icon
+            margin: 0
+            width: calc($btn-width / 2)
+            height: calc($btn-width / 2)
+        
+.download-modal
+    position: relative
+    align-self: center
+    background-color: white
+    border-radius: 6px
+    padding-top: $modal-padding
+    padding-bottom: $modal-padding
+    h4
+        font-weight: bold
+        width: 100%
+        margin-bottom: 1.2em
+        padding-left: $modal-padding
+        padding-right: $modal-padding
+    .content
+        position: relative
+        display: flex
+        width: 100%
+        justify-content: center
+        .column
+            display: flex
+            flex-direction: column
+            flex-basis: 100%
+            padding-left: $modal-padding
+            padding-right: $modal-padding
+            .mt-2 
+                margin-top: 0.5rem !important
+            .licence-image
+                max-height: 40px
+                width: auto
+            .licence 
+                display: flex
+                justify-content: flex-start
+                width: 100%
+                background: $bg-color
+                padding: 8px 16px
+                border-radius: 4px
+                > *
+                    align-self: center
+                .btn
+                    margin-left: auto
+                    background: none
+                    .icon
+                        margin: 0
+                        filter: brightness(0) invert(1)
+                .modal-icon
+                    width: 32px
+
+
+@media (max-width: 810px)
+    .download-modal .content
+        display: block
+    .download-modal .content .column:first-child
+        margin-bottom: $modal-padding
