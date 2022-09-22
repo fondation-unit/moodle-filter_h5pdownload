@@ -55,7 +55,7 @@ define(['jquery', 'core/url', 'core/str'], function($, Url, Str) {
                 const src = element.find(".h5p-iframe").attr("src");
                 if (src.length > 0 && src != 'about:blank') {
                     const h5pUrlPart = src.split("embed.php?url=")[1].split(".h5p")[0];
-
+                    console.log("h5pUrlPart => ", h5pUrlPart);
                     if (h5pUrlPart.length > 0) {
                         const downloadLink = decodeURIComponent(h5pUrlPart) + ".h5p";
 
