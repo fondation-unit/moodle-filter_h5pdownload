@@ -25,7 +25,7 @@ module.exports = function (grunt) {
         watch: {
             // If any .sass file changes in directory "sass" then run the "sass" task.
             files: ["src/**/*.ts", "sass/*.sass"],
-            tasks: ["webpack:dev", "sass"]
+            tasks: ["webpack:dev", "webpack:prod", "sass"]
         },
         eslint: {
             options: {

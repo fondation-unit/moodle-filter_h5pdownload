@@ -1,1 +1,7 @@
-//...
+const init = () => {
+
+    
+
+};
+
+export { init };

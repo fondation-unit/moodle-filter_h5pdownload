@@ -41,6 +41,7 @@ class filter_h5pdownload extends moodle_text_filter {
         print "</pre>";
 */
         if (preg_match($h5purl, $text) or $ishvp or $integration) {
+            /*
             $PAGE->requires->js_call_amd('filter_h5pdownload/h5pdownload', 'init', array(
                 'cfg' => array(
                     'backgroundColor' => get_config('filter_h5pdownload', 'backgroundcolor'),
@@ -53,7 +54,19 @@ class filter_h5pdownload extends moodle_text_filter {
                     'isHVP' => $ishvp
                 )
             ));
-            $PAGE->requires->js('/filter/h5pdownload/javascript/index.js', true);
+            */
+            $PAGE->requires->js_call_amd('filter_h5pdownload/index', 'init', array(
+                'cfg' => array(
+                    'backgroundColor' => get_config('filter_h5pdownload', 'backgroundcolor'),
+                    'textColor' => get_config('filter_h5pdownload', 'textcolor'),
+                    'licenceIntro' => get_config('filter_h5pdownload', 'licence_intro'),
+                    'licenceTarget' => get_config('filter_h5pdownload', 'licence_target'),
+                    'licenceName' => get_config('filter_h5pdownload', 'licence_name'),
+                    'licenceUrl' => get_config('filter_h5pdownload', 'licence_url'),
+                    'reuseConditions' => get_config('filter_h5pdownload', 'reuse_conditions'),
+                    'isHVP' => $ishvp
+                )
+            ));
         }
 
         return $text;

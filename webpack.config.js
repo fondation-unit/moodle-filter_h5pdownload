@@ -8,7 +8,7 @@ const config = {
     output: {
         library: 'index',
         libraryTarget: 'umd',
-        path: path.resolve(__dirname, 'javascript'),
+        path: path.resolve(__dirname, 'amd/src'),
         filename: '[name].js',
     },
     module: {
