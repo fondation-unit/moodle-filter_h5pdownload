@@ -18,9 +18,11 @@ const PLUGIN_NAME = 'filter_h5pdownload';
  */
 const init = (config: Config) : void => {
     // Tests
-    console.log(config.backgroundColor);
     Str.get_string('content_reuse', 'filter_h5pdownload').done((str: string) => config.modalTitle = str);
     Str.get_string('licence_to_use', 'filter_h5pdownload').done((str: string) => config.licenceToUse = str);
+    Str.get_string('download', 'core').done((str: string) => config.downloadText = str);
+    Str.get_string('copy', 'core').done((str: string) => config.copyText = str);
+    Str.get_string('close', 'core').done((str: string) => config.closeText = str);
 
     const downloadButton = document.querySelector('.h5p-download');
     if (downloadButton) {
@@ -96,7 +98,7 @@ const createModal = (config: Config) : void => {
         $modalOverlay.remove();
     });
 
-    const textLeftContent = `
+    const leftContent = `
         ${config.licenceIntro} 
         <a href="${config.licenceUrl}" target="_blank">${config.licenceName}</a>.
         <div class="licence" style="background-color:${config.backgroundColor};color:${config.textColor}">
@@ -104,9 +106,18 @@ const createModal = (config: Config) : void => {
         </div>
     `;
 
-    const $textLeft = createElement('p', '', textLeftContent);
+    const $rightContent = $('<a>', {
+        text: config.downloadText,
+        title: config.downloadText,
+        class: 'btn btn-secondary',
+        href: config.downloadLink
+    }).prepend(
+        createImage(config.downloadText, 'icon', null, 'download')
+    );
+
+    const $textLeft = createElement('p', '', leftContent);
     const $columnLeft = createElement('div', 'column').append($textLeft);
-    const $columnRight = createElement('div', 'column');
+    const $columnRight = createElement('div', 'column').append($rightContent);
     const $modalContent = createElement('div', 'content')
         .append($columnLeft)
         .append($columnRight);

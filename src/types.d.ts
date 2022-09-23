@@ -5,8 +5,12 @@ export interface Config {
     licenceTarget: string;
     licenceName: string;
     licenceUrl: string;
-    modalTitle: string|null;
-    licenceToUse: string|null;
     reuseConditions: string;
     isHVP: boolean;
+    modalTitle: string|null;
+    licenceToUse: string|null;
+    downloadText: string|null;
+    copyText: string|null;
+    closeText: string|null;
+    downloadLink: string|null;
 }
