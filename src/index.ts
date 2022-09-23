@@ -48,7 +48,7 @@ const handleH5Pelement = (h5pelement: HTMLElement, config: Config) : void => {
     const $h5pelement = $(h5pelement) as JQuery<HTMLElement>;
     config.downloadURL = getDownloadURL($(h5pelement));
     console.log(config.downloadURL);
-    const $button = createDownloadButton('button', 'h5p-download', config.downloadText, config);
+    const $button = createDownloadButton('button', 'h5p-download', config);
     $h5pelement.append($button);
 
     // Fade the button in and out.
@@ -125,10 +125,10 @@ const createModal = (config: Config) : void => {
     $(body).append($modalOverlay);
 }
 
-const createDownloadButton = (type: string, classes: string, text: string, config: Config) : JQuery<HTMLElement> => {
+const createDownloadButton = (type: string, classes: string, config: Config) : JQuery<HTMLElement> => {
     const element = document.createElement(type) as HTMLButtonElement;
     element.className = classes;
-    element.innerHTML = text;
+    $(element).append(createImage(config.downloadText, 'icon', null, 'download'));
     $(element).on('click', () => {
         createModal(config);
     });
