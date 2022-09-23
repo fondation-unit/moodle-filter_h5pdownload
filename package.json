@@ -9,6 +9,7 @@
     "devDependencies": {
         "@babel/core": "^7.19.1",
         "@babel/preset-env": "^7.19.1",
+        "@types/jquery": "^3.5.14",
         "@types/webpack": "^5.28.0",
         "@typescript-eslint/eslint-plugin": "^5.38.0",
         "@typescript-eslint/parser": "^5.38.0",
