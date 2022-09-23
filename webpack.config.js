@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const glob = require("glob");
 
 const config = {
     entry: {
@@ -23,6 +24,14 @@ const config = {
                 loader: 'svg-inline-loader',
             }
         ]
+    },
+    resolve: {
+        alias: {
+            // Make aliases for AMD core libraries
+            "core": path.resolve(__dirname, "../../lib/amd/src"),
+            // Find the lib/jquery JS file
+            "jquery": path.resolve(__dirname, glob.sync("../../lib/jquery/*.min.js")[0])
+        }
     }
 };
 
