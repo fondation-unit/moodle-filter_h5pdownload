@@ -12,5 +12,5 @@ export interface Config {
     downloadText: string|null;
     copyText: string|null;
     closeText: string|null;
-    downloadLink: string|null;
+    downloadURL: string|null;
 }

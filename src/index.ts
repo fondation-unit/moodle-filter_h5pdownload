@@ -46,7 +46,9 @@ const init = (config: Config) : void => {
 
 const handleH5Pelement = (h5pelement: HTMLElement, config: Config) : void => {
     const $h5pelement = $(h5pelement) as JQuery<HTMLElement>;
-    const $button = createButton('button', 'h5p-download', 'DOWNLOAD', config);
+    config.downloadURL = getDownloadURL($(h5pelement));
+    console.log(config.downloadURL);
+    const $button = createDownloadButton('button', 'h5p-download', 'DOWNLOAD', config);
     $h5pelement.append($button);
 
     // Fade the button in and out.
@@ -61,16 +63,6 @@ const createElement = (type: string, classes: string, text?: string|null) : JQue
     const element = document.createElement(type) as HTMLElement;
     element.className = classes;
     element.innerHTML = text || '';
-    return $(element);
-}
-
-const createButton = (type: string, classes: string, text: string, config: Config) : JQuery<HTMLElement> => {
-    const element = document.createElement(type) as HTMLButtonElement;
-    element.className = classes;
-    element.innerHTML = text;
-    $(element).on('click', () => {
-        createModal(config);
-    });
     return $(element);
 }
 
@@ -110,14 +102,15 @@ const createModal = (config: Config) : void => {
         text: config.downloadText,
         title: config.downloadText,
         class: 'btn btn-secondary',
-        href: config.downloadLink
+        href: decodeURI(config.downloadURL)
     }).prepend(
         createImage(config.downloadText, 'icon', null, 'download')
     );
 
     const $textLeft = createElement('p', '', leftContent);
     const $columnLeft = createElement('div', 'column').append($textLeft);
-    const $columnRight = createElement('div', 'column').append($rightContent);
+    const $columnRight = createElement('div', 'column')
+    config.downloadURL ? $columnRight.append($rightContent) : null;
     const $modalContent = createElement('div', 'content')
         .append($columnLeft)
         .append($columnRight);
@@ -132,4 +125,31 @@ const createModal = (config: Config) : void => {
     $(body).append($modalOverlay);
 }
 
+const createDownloadButton = (type: string, classes: string, text: string, config: Config) : JQuery<HTMLElement> => {
+    const element = document.createElement(type) as HTMLButtonElement;
+    element.className = classes;
+    element.innerHTML = text;
+    $(element).on('click', () => {
+        createModal(config);
+    });
+    return $(element);
+}
+
+const getDownloadURL = (element: JQuery<HTMLElement>) : string => {
+    let src = element.find(".h5p-iframe").attr("src");
+    if (src) {
+        if (src.length > 0 && src != 'about:blank') {
+            return decodeURIComponent(src.split("embed.php?url=")[1].split(".h5p")[0] + '.h5p');
+        }
+    } else {
+        src = element.find(".h5p-player").attr("src");
+        if (src.length > 0 && src != 'about:blank') {
+            return decodeURIComponent(src.split(".h5p")[0].split("embed.php?url=")[1] + '.h5p');
+        }
+    }
+    return '';
+}
+
+
 export { init };
+
