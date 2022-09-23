@@ -35,13 +35,13 @@ class filter_h5pdownload extends moodle_text_filter {
 
         $h5purl = '(http[^ &<]*h5p)';
         $ishvp = isset($PAGE->cm->modname) && $PAGE->cm->modname == 'hvp';
-        $integration = isset($PAGE->cm->modname) && $PAGE->cm->modname == 'h5pactivity';
+        $isintegration = isset($PAGE->cm->modname) && $PAGE->cm->modname == 'h5pactivity';
 
         if (!is_string($text) or empty($text)) {
             return $text; // Non string data or no H5P url don't need to be filtered.
         }
 
-        if (preg_match($h5purl, $text) or $ishvp or $integration) {
+        if (preg_match($h5purl, $text) or $ishvp or $isintegration) {
             if ($PAGE->requires->should_create_one_time_item_now('h5pdownload_filter')) {
                 $PAGE->requires->js_call_amd('filter_h5pdownload/index', 'init', array(
                     'cfg' => array(
