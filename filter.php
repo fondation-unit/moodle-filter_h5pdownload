@@ -28,6 +28,11 @@ class filter_h5pdownload extends moodle_text_filter {
     function filter($text, array $options = array()) {
         global $PAGE;
 
+        $coursectx = $this->context->get_course_context(false);
+        if (!$coursectx) {
+            return $text;
+        }
+
         $h5purl = '(http[^ &<]*h5p)';
         $ishvp = isset($PAGE->cm->modname) && $PAGE->cm->modname == 'hvp';
         $integration = isset($PAGE->cm->modname) && $PAGE->cm->modname == 'h5pactivity';
@@ -35,38 +40,22 @@ class filter_h5pdownload extends moodle_text_filter {
         if (!is_string($text) or empty($text)) {
             return $text; // Non string data or no H5P url don't need to be filtered.
         }
-/*
-        print "<pre>";
-        print_r($integration);
-        print "</pre>";
-*/
+
         if (preg_match($h5purl, $text) or $ishvp or $integration) {
-            /*
-            $PAGE->requires->js_call_amd('filter_h5pdownload/h5pdownload', 'init', array(
-                'cfg' => array(
-                    'backgroundColor' => get_config('filter_h5pdownload', 'backgroundcolor'),
-                    'textColor' => get_config('filter_h5pdownload', 'textcolor'),
-                    'licenceIntro' => get_config('filter_h5pdownload', 'licence_intro'),
-                    'licenceTarget' => get_config('filter_h5pdownload', 'licence_target'),
-                    'licenceName' => get_config('filter_h5pdownload', 'licence_name'),
-                    'licenceUrl' => get_config('filter_h5pdownload', 'licence_url'),
-                    'reuseConditions' => get_config('filter_h5pdownload', 'reuse_conditions'),
-                    'isHVP' => $ishvp
-                )
-            ));
-            */
-            $PAGE->requires->js_call_amd('filter_h5pdownload/index', 'init', array(
-                'cfg' => array(
-                    'backgroundColor' => get_config('filter_h5pdownload', 'backgroundcolor'),
-                    'textColor' => get_config('filter_h5pdownload', 'textcolor'),
-                    'licenceIntro' => get_config('filter_h5pdownload', 'licence_intro'),
-                    'licenceTarget' => get_config('filter_h5pdownload', 'licence_target'),
-                    'licenceName' => get_config('filter_h5pdownload', 'licence_name'),
-                    'licenceUrl' => get_config('filter_h5pdownload', 'licence_url'),
-                    'reuseConditions' => get_config('filter_h5pdownload', 'reuse_conditions'),
-                    'isHVP' => $ishvp
-                )
-            ));
+            if ($PAGE->requires->should_create_one_time_item_now('h5pdownload_filter')) {
+                $PAGE->requires->js_call_amd('filter_h5pdownload/index', 'init', array(
+                    'cfg' => array(
+                        'backgroundColor' => get_config('filter_h5pdownload', 'backgroundcolor'),
+                        'textColor' => get_config('filter_h5pdownload', 'textcolor'),
+                        'licenceIntro' => get_config('filter_h5pdownload', 'licence_intro'),
+                        'licenceTarget' => get_config('filter_h5pdownload', 'licence_target'),
+                        'licenceName' => get_config('filter_h5pdownload', 'licence_name'),
+                        'licenceUrl' => get_config('filter_h5pdownload', 'licence_url'),
+                        'reuseConditions' => get_config('filter_h5pdownload', 'reuse_conditions'),
+                        'isHVP' => $ishvp
+                    )
+                ));
+            }
         }
 
         return $text;
