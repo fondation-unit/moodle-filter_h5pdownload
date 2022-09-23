@@ -48,7 +48,7 @@ const handleH5Pelement = (h5pelement: HTMLElement, config: Config) : void => {
     const $h5pelement = $(h5pelement) as JQuery<HTMLElement>;
     config.downloadURL = getDownloadURL($(h5pelement));
     console.log(config.downloadURL);
-    const $button = createDownloadButton('button', 'h5p-download', 'DOWNLOAD', config);
+    const $button = createDownloadButton('button', 'h5p-download', config.downloadText, config);
     $h5pelement.append($button);
 
     // Fade the button in and out.
