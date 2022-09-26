@@ -9,7 +9,8 @@ import * as Url from 'core/url';
 
 const PLUGIN_NAME = 'filter_h5pdownload';
 const SEARCH_TIMER = 3000;
-
+const EMBED_URL = 'embed.php?url=';
+const H5P_EXTENSION = '.h5p';
 
 /**
  * The script initialization function.
@@ -99,8 +100,8 @@ const createElement = (type: string, classes: string, text?: string|null) : JQue
  * @returns {JQuery<HTMLElement>}
  */
 const createImage = (title: string, classes: string, src?: string|null, filename?: string|null) : JQuery<HTMLElement> => {
-    const $icon = $('<img/>');
-    $icon.attr('alt', title)
+    const $icon = $('<img/>')
+        .attr('alt', title)
         .attr('title', title)
         .attr('class', classes)
         .attr('src', src);
@@ -144,8 +145,8 @@ const createModal = (config: Config) : void => {
     config.downloadURL ? $columnRight.append($rightContent) : null;
 
     const $modalContent = createElement('div', 'content')
-        .append($columnLeft)
-        .append($columnRight);
+                            .append($columnLeft)
+                            .append($columnRight);
 
     $modal.html(`<h4>${config.modalTitle}</h4>`)
           .append($modalContent)
@@ -197,8 +198,8 @@ const createLicenceInfos = (config: Config) : string => {
 const createDownloadButton = (type: string, classes: string, config: Config) : JQuery<HTMLElement> => {
     const element = document.createElement(type) as HTMLButtonElement;
     element.className = classes;
-    $(element).append(createImage(config.downloadText, 'icon', null, 'download'));
-    $(element).on('click', () => {
+    $(element).append(createImage(config.downloadText, 'icon', null, 'download'))
+    .on('click', () => {
         createModal(config);
     });
     return $(element);
@@ -210,7 +211,7 @@ const createDownloadButton = (type: string, classes: string, config: Config) : J
  * @param {JQuery<HTMLElement>} element
  * @returns {string}
  */
-const getDownloadURL = (element: JQuery<HTMLElement>, config: Config) : string => {
+const getDownloadURL = (element: JQuery<HTMLElement>, config: Config) : string|null => {
     if (config.isHVP) {
         const hvpobject = window.H5PIntegration as any;
         const hvpcontents = Object.values(hvpobject['contents'])[0] as H5PIntegrationContent;
@@ -220,15 +221,15 @@ const getDownloadURL = (element: JQuery<HTMLElement>, config: Config) : string =
 
     let src = element.find(".h5p-iframe").attr("src");
     if (src && src.length > 0 && src != 'about:blank') {
-        return decodeURIComponent(src.split("embed.php?url=")[1].split(".h5p")[0] + '.h5p');
+        return decodeURIComponent(src.split(EMBED_URL)[1].split(H5P_EXTENSION)[0] + H5P_EXTENSION);
     } else {
         src = element.find(".h5p-player").attr("src");
         if (src && src.length > 0 && src != 'about:blank') {
-            return decodeURIComponent(src.split(".h5p")[0].split("embed.php?url=")[1] + '.h5p');
+            return decodeURIComponent(src.split(H5P_EXTENSION)[0].split(EMBED_URL)[1] + H5P_EXTENSION);
         }
     }
 
-    return '';
+    return null;
 };
 
 
