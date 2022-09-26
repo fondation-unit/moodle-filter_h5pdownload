@@ -1,4 +1,4 @@
-import { Config } from './types';
+import { Config, H5PIntegrationContent } from './types';
 // @ts-ignore
 import $ from 'jquery';
 // @ts-ignore
@@ -8,6 +8,7 @@ import * as Url from 'core/url';
 
 
 const PLUGIN_NAME = 'filter_h5pdownload';
+const SEARCH_TIMER = 3000;
 
 
 /**
@@ -30,18 +31,26 @@ const init = (config: Config) : void => {
     }
 
     /**
-     * Search the H5P element within the document.
+     * Search the existing H5P element within the document.
+     * Useful for the slow loading time of some H5P layouts.
      * 
      * @param {function}
      * @returns {number}
      */
     const searchElement: number = window.setInterval(() => {
-        const element = document.querySelector('.h5p-player') as HTMLIFrameElement;
-        if (element.parentElement) {
-            handleH5Pelement(element.parentElement, config);
+        const mod_h5pactivity = document.querySelector('.h5p-player') as HTMLIFrameElement|null;
+        const mod_hvp = document.querySelector('.h5p-iframe-wrapper') as HTMLElement|null;
+
+        if (mod_h5pactivity !== null && mod_h5pactivity.parentElement !== null) {
+            handleH5Pelement(mod_h5pactivity.parentElement, config);
             clearInterval(searchElement);
         }
-    }, 3000);
+
+        if (mod_hvp !== null) {
+            handleH5Pelement(mod_hvp.parentElement, config);
+            clearInterval(searchElement);
+        }
+    }, SEARCH_TIMER);
 };
 
 /**
@@ -53,7 +62,7 @@ const init = (config: Config) : void => {
  */
 const handleH5Pelement = (h5pelement: HTMLElement, config: Config) : void => {
     const $h5pelement = $(h5pelement) as JQuery<HTMLElement>;
-    config.downloadURL = getDownloadURL($(h5pelement));
+    config.downloadURL = getDownloadURL($(h5pelement), config);
     const $button = createDownloadButton('button', 'h5p-download', config);
     $h5pelement.append($button);
 
@@ -78,7 +87,7 @@ const createElement = (type: string, classes: string, text?: string|null) : JQue
     element.className = classes;
     element.innerHTML = text || '';
     return $(element);
-}
+};
 
 /**
  * Create a new image element.
@@ -99,7 +108,7 @@ const createImage = (title: string, classes: string, src?: string|null, filename
         $icon.attr('src', Url.imageUrl(filename, PLUGIN_NAME));
     }
     return $icon;
-}
+};
 
 /**
  * Create the modal element.
@@ -152,7 +161,7 @@ const createModal = (config: Config) : void => {
     // Append to the body
     const body = document.querySelector('body') as HTMLBodyElement;
     $(body).append($modalOverlay);
-}
+};
 
 /**
  * Create the download button.
@@ -170,7 +179,7 @@ const createDownloadButton = (type: string, classes: string, config: Config) : J
         createModal(config);
     });
     return $(element);
-}
+};
 
 /**
  * Retrieve the H5P file URL.
@@ -178,20 +187,27 @@ const createDownloadButton = (type: string, classes: string, config: Config) : J
  * @param {JQuery<HTMLElement>} element
  * @returns {string}
  */
-const getDownloadURL = (element: JQuery<HTMLElement>) : string => {
+const getDownloadURL = (element: JQuery<HTMLElement>, config: Config) : string => {
+    if (config.isHVP) {
+        const hvpobject = window.H5PIntegration as any;
+        const hvpcontents = Object.values(hvpobject['contents'])[0] as H5PIntegrationContent;
+        const exportUrl = hvpcontents['exportUrl'] as string;
+        return decodeURIComponent(exportUrl);
+    }
+
     let src = element.find(".h5p-iframe").attr("src");
     if (src) {
-        if (src.length > 0 && src != 'about:blank') {
+        if (src && src.length > 0 && src != 'about:blank') {
             return decodeURIComponent(src.split("embed.php?url=")[1].split(".h5p")[0] + '.h5p');
         }
     } else {
         src = element.find(".h5p-player").attr("src");
-        if (src.length > 0 && src != 'about:blank') {
+        if (src && src.length > 0 && src != 'about:blank') {
             return decodeURIComponent(src.split(".h5p")[0].split("embed.php?url=")[1] + '.h5p');
         }
     }
     return '';
-}
+};
 
 
 export { init };
