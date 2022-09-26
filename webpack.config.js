@@ -36,6 +36,6 @@ const config = {
 };
 
 module.exports = () => {
-    config.mode = 'development';
+    config.mode = 'production';
     return config;
 };
