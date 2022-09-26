@@ -12,6 +12,7 @@ export type Config =
         licenceTarget: string;
         licenceName: string;
         licenceUrl: string;
+        licenceImage: string|null;
         reuseConditions: string;
         isHVP: boolean;
         modalTitle: string|null;

@@ -128,14 +128,7 @@ const createModal = (config: Config) : void => {
         $modalOverlay.remove();
     });
 
-    const leftContent = `
-        ${config.licenceIntro} 
-        <a href="${config.licenceUrl}" target="_blank">${config.licenceName}</a>.
-        <div class="licence" style="background-color:${config.backgroundColor};color:${config.textColor}">
-            <span>${config.licenceToUse} : ${config.licenceName}</span>
-        </div>
-    `;
-
+    const leftContent = createLicenceInfos(config);
     const $rightContent = $('<a>', {
         text: config.downloadText,
         title: config.downloadText,
@@ -145,10 +138,11 @@ const createModal = (config: Config) : void => {
         createImage(config.downloadText, 'icon', null, 'download')
     );
 
-    const $textLeft = createElement('p', '', leftContent);
+    const $textLeft = createElement('p', '').append(leftContent);
     const $columnLeft = createElement('div', 'column').append($textLeft);
     const $columnRight = createElement('div', 'column')
     config.downloadURL ? $columnRight.append($rightContent) : null;
+
     const $modalContent = createElement('div', 'content')
         .append($columnLeft)
         .append($columnRight);
@@ -161,6 +155,35 @@ const createModal = (config: Config) : void => {
     // Append to the body
     const body = document.querySelector('body') as HTMLBodyElement;
     $(body).append($modalOverlay);
+};
+
+/**
+ * Generate the licence informations block to render.
+ * 
+ * @param {Config} config
+ * @returns {string}
+ */
+const createLicenceInfos = (config: Config) : string => {
+    if (config.licenceTarget) {
+        const $licenceElement = $('#' + config.licenceTarget);
+        if ($licenceElement && $licenceElement.attr('href')) {
+            // Get the licence infos.
+            config.licenceName = $licenceElement.data('name');
+            config.licenceUrl = $licenceElement.attr('href');
+            config.licenceImage = $licenceElement.find('img').attr('src');
+        }
+    }
+
+    return `
+        ${config.licenceIntro} 
+        <a href="${config.licenceUrl}" target="_blank">
+            ${config.licenceName}
+            <img src="${config.licenceImage}" class="licence-image" alt="${config.licenceName}">
+        </a>
+        <div class="licence" style="background-color:${config.backgroundColor};color:${config.textColor}">
+            <span>${config.licenceToUse} : ${config.licenceName}</span>
+        </div>
+    `;
 };
 
 /**
