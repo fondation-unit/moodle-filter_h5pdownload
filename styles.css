@@ -108,8 +108,10 @@
   margin-top: 0.5rem !important;
 }
 .download-modal .content .column .licence-image {
-  max-height: 50px;
+  display: flex;
   width: auto;
+  max-height: 50px;
+  margin: 10px 0;
 }
 .download-modal .content .column .licence {
   display: flex;
