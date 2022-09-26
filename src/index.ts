@@ -219,16 +219,15 @@ const getDownloadURL = (element: JQuery<HTMLElement>, config: Config) : string =
     }
 
     let src = element.find(".h5p-iframe").attr("src");
-    if (src) {
-        if (src && src.length > 0 && src != 'about:blank') {
-            return decodeURIComponent(src.split("embed.php?url=")[1].split(".h5p")[0] + '.h5p');
-        }
+    if (src && src.length > 0 && src != 'about:blank') {
+        return decodeURIComponent(src.split("embed.php?url=")[1].split(".h5p")[0] + '.h5p');
     } else {
         src = element.find(".h5p-player").attr("src");
         if (src && src.length > 0 && src != 'about:blank') {
             return decodeURIComponent(src.split(".h5p")[0].split("embed.php?url=")[1] + '.h5p');
         }
     }
+
     return '';
 };
 
