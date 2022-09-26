@@ -17,6 +17,7 @@ const PLUGIN_NAME = 'filter_h5pdownload';
  * @returns {void}
  */
 const init = (config: Config) : void => {
+    // Set the config strings.
     Str.get_string('content_reuse', 'filter_h5pdownload').done((str: string) => config.modalTitle = str);
     Str.get_string('licence_to_use', 'filter_h5pdownload').done((str: string) => config.licenceToUse = str);
     Str.get_string('download', 'core').done((str: string) => config.downloadText = str);
@@ -156,9 +157,9 @@ const createModal = (config: Config) : void => {
 /**
  * Create the download button.
  * 
- * @param {string} type:string
- * @param {string} classes:string
- * @param {Config} config:Config
+ * @param {string} types
+ * @param {string} classes
+ * @param {Config} config
  * @returns {JQuery<HTMLElement>}
  */
 const createDownloadButton = (type: string, classes: string, config: Config) : JQuery<HTMLElement> => {
