@@ -50,19 +50,27 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtext($name, $title, null, $default, PARAM_TEXT);
     $settings->add($setting);
 
-    // Grab licence from block_punchy plugin
+    // Grab licence from block_informations plugin
     $name = 'filter_h5pdownload/licence_target';
     $title = get_string('settings:licence_target', 'filter_h5pdownload');
     $desc = get_string('settings:licence_target', 'filter_h5pdownload');
     $setting = new admin_setting_configtext($name, $title, $desc, $default_target_id, PARAM_TEXT);
     $settings->add($setting);
 
-    // Licence name
+    // Default licence name
     $name = 'filter_h5pdownload/licence_name';
     $title = get_string('settings:licence_name', 'filter_h5pdownload');
-    $desc = get_string('settings:licence_name', 'filter_h5pdownload');
+    $desc = get_string('settings:licence_name_desc', 'filter_h5pdownload');
     $default = get_string('settings:licence_name_default', 'filter_h5pdownload');
     $setting = new admin_setting_configtext($name, $title, $desc, $default, PARAM_TEXT);
+    $settings->add($setting);
+
+    // Default licence image
+    $name = 'filter_h5pdownload/licence_image';
+    $title = get_string('settings:licence_image', 'filter_h5pdownload');
+    $desc = get_string('settings:licence_image_desc', 'filter_h5pdownload');
+    $filename = 'licence_image';
+    $setting = new admin_setting_configstoredfile($name, $title, $desc, $filename, 0, ['accepted_types' => ['image']]);
     $settings->add($setting);
 
     // Conditons of reuse
