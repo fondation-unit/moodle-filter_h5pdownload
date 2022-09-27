@@ -78,11 +78,31 @@ class filter_h5pdownload extends moodle_text_filter {
                     'licenceIntro' => get_config('filter_h5pdownload', 'licence_intro'),
                     'licenceTarget' => get_config('filter_h5pdownload', 'licence_target'),
                     'licenceName' => get_config('filter_h5pdownload', 'licence_name'),
+                    'licenceImage' => $this->get_licence_image(),
                     'licenceUrl' => get_config('filter_h5pdownload', 'licence_url'),
                     'reuseConditions' => get_config('filter_h5pdownload', 'reuse_conditions'),
                     'isHVP' => $ishvp
                 )
             ));
         }
+    }
+
+    /*
+     * Get the default licence image.
+     */
+    function get_licence_image() {
+        $image = null;
+        $imagename = get_config('filter_h5pdownload', 'licence_image');
+        if (isset($imagename) && strlen($imagename) > 0) {
+            $image = moodle_url::make_pluginfile_url(
+                context_system::instance()->id,
+                'filter_h5pdownload',
+                'licence_image',
+                null,
+                null,
+                $imagename);
+            $image = $image->out();
+        }
+        return $image;
     }
 }
