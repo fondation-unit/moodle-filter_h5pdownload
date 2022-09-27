@@ -21,6 +21,8 @@ const H5P_EXTENSION = '.h5p';
 const init = (config: Config) : void => {
     // Set the config strings.
     Str.get_string('content_reuse', 'filter_h5pdownload').done((str: string) => config.modalTitle = str);
+    Str.get_string('licence_name', 'filter_h5pdownload').done((str: string) => config.licenceName = str);
+    Str.get_string('licence_image', 'filter_h5pdownload').done((str: string) => config.licenceImage = str);
     Str.get_string('licence_to_use', 'filter_h5pdownload').done((str: string) => config.licenceToUse = str);
     Str.get_string('download', 'core').done((str: string) => config.downloadText = str);
     Str.get_string('copy', 'core').done((str: string) => config.copyText = str);
