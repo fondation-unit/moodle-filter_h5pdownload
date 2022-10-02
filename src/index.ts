@@ -95,7 +95,7 @@ const handleH5Pelement = (h5pelement: HTMLElement, config: Config) : void => {
  * @returns {void}
  */
 const addButtonToH5PElement = (h5pelement: JQuery<HTMLElement>, button: JQuery<HTMLButtonElement>) : void => {
-    h5pelement.append(button);
+    h5pelement.prepend(button);
     // Fade the button in and out.
     h5pelement.on('mouseenter', () => {
         button.fadeIn();
