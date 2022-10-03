@@ -1,31 +1,33 @@
-.h5p-download
-    +bg-shadow($bg-color, $main-color)
-    position: absolute
-    display: none
-    margin-top: 40px
-    right: 50px
-    width: $btn-width
-    height: $btn-width
-    text-align: center
-    line-height: $btn-width
-    border-radius: $border-radius
-    border: none
-    outline: 0
-    z-index: 1
-    transition: transform $duration linear, color $duration linear, background-color $duration linear, box-shadow $duration linear
-    &:hover
-        +bg-shadow($btn-active-bg, $btn-shadow)
-        transform: scale(1.15)
+.h5p-download-wrapper
+    display: flex
+    justify-content: flex-end
+    width: 100%
+    padding: 5px
+    .h5p-download
+        +bg-shadow($bg-color, $main-color)
+        margin-top: $button-margin
+        width: $btn-width
+        height: $btn-width
+        text-align: center
+        line-height: $btn-width
+        border-radius: $border-radius
+        border: none
         outline: 0
-        .icon 
-            color: white
-            filter: brightness(0) invert(1)
-    &:focus
-        outline: 0
-    .icon
-        +d-flex(center)
-        width: 100%
-        margin: 0
+        z-index: 1
+        transition: transform $duration linear, color $duration linear, background-color $duration linear, box-shadow $duration linear
+        &:hover
+            +bg-shadow($btn-active-bg, $btn-shadow)
+            transform: scale(1.15)
+            outline: 0
+            .icon 
+                color: white
+                filter: brightness(0) invert(1)
+        &:focus
+            outline: 0
+        .icon
+            +d-flex(center)
+            width: 100%
+            margin: 0
     
 .download-overlay
     +d-flex(center)

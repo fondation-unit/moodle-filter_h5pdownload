@@ -24,9 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2022092800;
+$plugin->version   = 2022100300;
 $plugin->requires  = 2020061500;
 $plugin->component = 'filter_h5pdownload';
 $plugin->dependencies = array(
-    'block_punchy' => ANY_VERSION
+    'block_informations' => ANY_VERSION
 );

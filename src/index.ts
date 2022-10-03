@@ -88,20 +88,14 @@ const handleH5Pelement = (h5pelement: HTMLElement, config: Config) : void => {
 };
 
 /**
- * Append the download button to the H5P element and add events.
+ * Append the download button to the H5P element.
  * 
  * @param {JQuery<HTMLElement>} h5pelement
- * @param {JQuery<HTMLButtonElement>} button
+ * @param {JQuery<HTMLElement>} button
  * @returns {void}
  */
-const addButtonToH5PElement = (h5pelement: JQuery<HTMLElement>, button: JQuery<HTMLButtonElement>) : void => {
+const addButtonToH5PElement = (h5pelement: JQuery<HTMLElement>, button: JQuery<HTMLElement>) : void => {
     h5pelement.append(button);
-    // Fade the button in and out.
-    h5pelement.on('mouseenter', () => {
-        button.fadeIn();
-    }).on('mouseleave', () => {
-        button.fadeOut();
-    });
 };
 
 /**
@@ -226,14 +220,14 @@ const createLicenceInfos = (config: Config) : string => {
  * @param {JQuery<HTMLElement>=} h5pelement?
  * @returns {JQuery<HTMLButtonElement>}
  */
-const createDownloadButton = (type: string, classes: string, config: Config, h5pelement?: JQuery<HTMLElement>) : JQuery<HTMLButtonElement> => {
+const createDownloadButton = (type: string, classes: string, config: Config, h5pelement?: JQuery<HTMLElement>) : JQuery<HTMLElement> => {
+    const wrapper = createElement('div', 'h5p-download-wrapper', '');
     const element = document.createElement(type) as HTMLButtonElement;
     element.className = classes;
     $(element).append(createImage(config.downloadText, 'icon', null, 'download'))
-    .on('click', () => {
-        createModal(config, h5pelement);
-    });
-    return $(element);
+        .on('click', () => { createModal(config, h5pelement); });
+    $(wrapper).append($(element));
+    return $(wrapper);
 };
 
 /**
