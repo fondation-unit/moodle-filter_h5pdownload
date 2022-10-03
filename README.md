@@ -19,8 +19,6 @@ Set the filter to **On** for both **contents and title** in Moodle administratio
 
 ## Settings
 
-Basic settings :
-
 | Setting name     | Description |
 | ---------------- | ---------------------------------------------|
 | backgroundcolor  | background color of the licence text element |
