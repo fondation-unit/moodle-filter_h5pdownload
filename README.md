@@ -1,10 +1,37 @@
 # moodle-filter_h5pdownload
 
-Adds a hover button to H5P activities that are inserted via Moodle's Atto editor. It opens a pop-up displaying information about the content license and allows the `.h5p` file to be downloaded.
+This filter adds a button at the bottom of H5P activities that are in display. It opens a pop-up displaying information about the content license and allows the `.h5p` file to be downloaded.
+
+## Requirements
+
+This plugin requires [block_informations](https://github.com/fondation-unit/moodle-block_informations) as a support for finding the licence to display.
+See [version.php](version.php) :
+
+```php
+$plugin->dependencies = array(
+    'block_informations' => ANY_VERSION
+);
+```
 
 ## Setup
 
-Set the filter to **On** for **contents and title** in Moodle administration.
+Set the filter to **On** for both **contents and title** in Moodle administration, at `/admin/filters.php`.
+
+## Settings
+
+Basic settings :
+
+| Setting name     | Description |
+| ---------------- | ---------------------------------------------|
+| backgroundcolor  | background color of the licence text element |
+| textcolor        | color of the licence text |
+| licence_intro    | introduction text of the modal |
+| licence_target   | the ID of the HTML <a> element containing the licence image ; by default `block_informations-cc-licence` |
+| licence_name     | the default licence name, used if no target element is found using the HTML ID from the `licence_target` setting |
+| licence_image    | the default licence image, used if no target element is found using the HTML ID from the `licence_target` setting |
+| reuse_conditions | text displaying the conditions for reuse of the content |
+| licence_url      | the default licence URL, used if no target element is found using the HTML ID from the `licence_target` setting |
+
 
 ## Development
 
@@ -12,9 +39,17 @@ Run the watch mode for both CSS and JS :
 
 `grunt watch`
 
+### Styling
+
+Stylesheets are located in the `sass` folder.
+
 Compile the CSS :
 
 `grunt webpack`
+
+### Javascript
+
+The typescript files are located in the `src` folder.
 
 Compile the scripts :
 
