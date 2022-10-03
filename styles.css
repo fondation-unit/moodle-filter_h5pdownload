@@ -1,13 +1,14 @@
-.h5p-download {
+.h5p-download-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.h5p-download-wrapper .h5p-download {
   background-color: #f0f1fc;
   -moz-box-shadow: 0 0 3px #1a237e;
   -webkit-box-shadow: 0 0 3px #1a237e;
   box-shadow: 0 0 3px #1a237e;
-  position: absolute;
-  display: none;
-  top: 20px;
-  margin-top: 40px;
-  right: calc(100% - 60px);
+  margin-top: 30px;
   width: 43px;
   height: 43px;
   text-align: center;
@@ -18,7 +19,7 @@
   z-index: 1;
   transition: transform 0.1s linear, color 0.1s linear, background-color 0.1s linear, box-shadow 0.1s linear;
 }
-.h5p-download:hover {
+.h5p-download-wrapper .h5p-download:hover {
   background-color: #3c93f0;
   -moz-box-shadow: 0 0 3px #76bbff;
   -webkit-box-shadow: 0 0 3px #76bbff;
@@ -26,14 +27,14 @@
   transform: scale(1.15);
   outline: 0;
 }
-.h5p-download:hover .icon {
+.h5p-download-wrapper .h5p-download:hover .icon {
   color: white;
   filter: brightness(0) invert(1);
 }
-.h5p-download:focus {
+.h5p-download-wrapper .h5p-download:focus {
   outline: 0;
 }
-.h5p-download .icon {
+.h5p-download-wrapper .h5p-download .icon {
   display: flex;
   justify-content: center;
   width: 100%;
