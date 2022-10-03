@@ -225,9 +225,7 @@ const createDownloadButton = (type: string, classes: string, config: Config, h5p
     const element = document.createElement(type) as HTMLButtonElement;
     element.className = classes;
     $(element).append(createImage(config.downloadText, 'icon', null, 'download'))
-    .on('click', () => {
-        createModal(config, h5pelement);
-    });
+        .on('click', () => { createModal(config, h5pelement); });
     $(wrapper).append($(element));
     return $(wrapper);
 };
