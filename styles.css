@@ -2,6 +2,7 @@
   display: flex;
   justify-content: flex-end;
   width: 100%;
+  padding: 5px;
 }
 .h5p-download-wrapper .h5p-download {
   background-color: #f0f1fc;
