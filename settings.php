@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
-    $default_target_id = 'block_punchy-cc-licence';
+    $default_target_id = 'block_informations-cc-licence';
 
     // Licence area background color
     $name = 'filter_h5pdownload/backgroundcolor';
