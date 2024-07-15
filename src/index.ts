@@ -143,7 +143,7 @@ const createHoverEvent = (element: JQuery<HTMLElement>): void => {
     });
 
     element.on("mouseenter", () => {
-        element.find(".h5p-download").css({ 'top': mouseY }).fadeIn();
+        element.find(".h5p-download").css({ 'top': mouseY, 'right': 0 }).fadeIn();
     });
 
     element.on("mouseleave", () => {
