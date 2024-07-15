@@ -10,7 +10,8 @@
         display: block !important
         position: absolute
         +bg-shadow($bg-color, $main-color)
-        margin-top: $button-margin
+        bottom: 2px
+        right: 2px
         width: $btn-width
         height: $btn-width
         text-align: center
@@ -30,7 +31,10 @@
         &:focus
             outline: 0
         .icon
-            +d-flex(center)
+            justify-content: center
+            align-self: center
+            width: 100%
+            margin: 0 auto
             width: 100%
             margin: 0
 
