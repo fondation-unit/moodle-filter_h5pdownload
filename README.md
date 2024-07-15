@@ -5,7 +5,9 @@ This plugin adds a button at the bottom of H5P activities on a Moodle page. When
 ## Requirements
 
 > [!IMPORTANT]
-> This plugin relies on another block plugin to retrieve the license information for display. You must install the [block_informations](https://github.com/fondation-unit/moodle-block_informations) plugin before installing `filter_h5pdownload`.
+> This plugin relies on another block plugin to retrieve the license information for display.
+> You must install the [block_informations](https://github.com/fondation-unit/moodle-block_informations) plugin before installing `filter_h5pdownload`.
+> 
 > See [version.php](version.php) :
 > 
 > ```php
