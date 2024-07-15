@@ -48,7 +48,7 @@ const init = (config: Config): void => {
 
         if (inline_hvps !== null) {
             inline_hvps.forEach(element => {
-                handleH5Pelement(element.parentElement, config);
+                handleH5Pelement(element, config);
             });
             clearInterval(searchElement);
         }
