@@ -1,17 +1,18 @@
 # moodle-filter_h5pdownload
 
-This filter adds a button at the bottom of H5P activities that are in display. It opens a pop-up displaying information about the content license and allows the `.h5p` file to be downloaded.
+This plugin adds a button at the bottom of H5P activities on a Moodle page. When the button is clicked, a modal window appears and displays information about the license mentioned in the course (via the `block_informations`), as well as a download button for the H5P file.
 
 ## Requirements
 
-This plugin requires [block_informations](https://github.com/fondation-unit/moodle-block_informations) as a support for finding the licence to display.
-See [version.php](version.php) :
-
-```php
-$plugin->dependencies = array(
-    'block_informations' => ANY_VERSION
-);
-```
+> [!IMPORTANT]
+> This plugin requires [block_informations](https://github.com/fondation-unit/moodle-block_informations) as a support for finding the licence to display.
+> See [version.php](version.php) :
+> 
+> ```php
+> $plugin->dependencies = array(
+>    'block_informations' => ANY_VERSION
+>);
+> ```
 
 ## Setup
 
