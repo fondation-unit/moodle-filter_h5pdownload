@@ -36,7 +36,8 @@ This plugin adds a button at the bottom of H5P activities on a Moodle page. When
 1. Fill in the various settings from the previous step. Don't forget to fill in the settings of [block_informations](https://github.com/fondation-unit/moodle-block_informations) as well.
 2. Set the filter to `On` (or `Off, but available`) for `Content and headings` in Moodle administration, at `/admin/filters.php`.
 3. If you have chosen the setting `Off, but available`, you can activate the filter in a course category or within a course through the settings.
-4. If the filter is active in a course, you should see download buttons at the bottom of each H5P activity.
+4. Add an instance of `block_informations` in your Moodle course.
+5. If the filter is active in a course, you should see download buttons at the bottom of each H5P activity.
 
 
 ## Development
