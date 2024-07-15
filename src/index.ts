@@ -12,13 +12,14 @@ const SEARCH_TIMER = 1500;
 const EMBED_URL = 'embed.php?url=';
 const H5P_EXTENSION = '.h5p';
 
+
 /**
  * The script initialization function.
  * 
  * @param {Config} config
  * @returns {void}
  */
-const init = (config: Config) : void => {
+const init = (config: Config): void => {
     // Set the config strings.
     Str.get_string('content_reuse', 'filter_h5pdownload').done((str: string) => config.modalTitle = str);
     Str.get_string('licence_name', 'filter_h5pdownload').done((str: string) => config.licenceName = str);
@@ -36,9 +37,9 @@ const init = (config: Config) : void => {
      * @returns {number}
      */
     const searchElement: number = window.setInterval(() => {
-        const mod_h5pactivity = document.querySelector('.h5p-player') as HTMLIFrameElement|null;
-        const mod_hvp = document.querySelector('.h5p-iframe-wrapper') as HTMLElement|null;
-        const inline_hvp = document.querySelectorAll('.h5p-placeholder') as NodeListOf<HTMLElement>|null;
+        const mod_h5pactivity = document.querySelector('.h5p-player') as HTMLIFrameElement | null;
+        const mod_hvp = document.querySelector('.h5p-iframe-wrapper') as HTMLElement | null;
+        const inline_hvp = document.querySelectorAll('.h5p-placeholder') as NodeListOf<HTMLElement> | null;
 
         if (mod_h5pactivity !== null && mod_h5pactivity.parentElement !== null) {
             handleH5Pelement(mod_h5pactivity.parentElement, config);
@@ -57,6 +58,7 @@ const init = (config: Config) : void => {
     }, SEARCH_TIMER);
 };
 
+
 /**
  * Add the download button over the H5P element.
  * 
@@ -64,12 +66,15 @@ const init = (config: Config) : void => {
  * @param {Config} config
  * @returns {void}
  */
-const handleH5Pelement = (h5pelement: HTMLElement, config: Config) : void => {
+const handleH5Pelement = (h5pelement: HTMLElement, config: Config): void => {
     const $h5pelement = $(h5pelement) as JQuery<HTMLElement>;
     config.downloadURL = getDownloadURL($(h5pelement), config);
     const $button = createDownloadButton('button', 'h5p-download', config);
+
+    createHoverEvent($h5pelement);
     addButtonToH5PElement($h5pelement, $button);
 };
+
 
 /**
  * Add the download button over the H5P list of elements.
@@ -79,13 +84,17 @@ const handleH5Pelement = (h5pelement: HTMLElement, config: Config) : void => {
  * @param {Config} config
  * @returns {void}
  */
- const handleMultipleH5Pelements = (h5pelements: NodeListOf<HTMLElement>, config: Config) : void => {
+const handleMultipleH5Pelements = (h5pelements: NodeListOf<HTMLElement>, config: Config): void => {
     h5pelements.forEach(element => {
+        const $h5pelement = $(element) as JQuery<HTMLElement>;
         config.downloadURL = getDownloadURL($(element), config);
         const $button = createDownloadButton('button', 'h5p-download', config, $(element));
+
+        createHoverEvent($h5pelement);
         addButtonToH5PElement($(element), $button);
     });
 };
+
 
 /**
  * Append the download button to the H5P element.
@@ -94,9 +103,10 @@ const handleH5Pelement = (h5pelement: HTMLElement, config: Config) : void => {
  * @param {JQuery<HTMLElement>} button
  * @returns {void}
  */
-const addButtonToH5PElement = (h5pelement: JQuery<HTMLElement>, button: JQuery<HTMLElement>) : void => {
+const addButtonToH5PElement = (h5pelement: JQuery<HTMLElement>, button: JQuery<HTMLElement>): void => {
     h5pelement.append(button);
 };
+
 
 /**
  * Create a new element.
@@ -106,7 +116,7 @@ const addButtonToH5PElement = (h5pelement: JQuery<HTMLElement>, button: JQuery<H
  * @param {strin|null=} text?
  * @returns {JQuery<HTMLElement>}
  */
-const createElement = (type: string, classes: string, text?: string|null) : JQuery<HTMLElement> => {
+const createElement = (type: string, classes: string, text?: string | null): JQuery<HTMLElement> => {
     const element = document.createElement(type) as HTMLElement;
     element.className = classes;
     element.innerHTML = text || '';
@@ -122,7 +132,7 @@ const createElement = (type: string, classes: string, text?: string|null) : JQue
  * @param {string|null} filename
  * @returns {JQuery<HTMLElement>}
  */
-const createImage = (title: string, classes: string, src?: string|null, filename?: string|null) : JQuery<HTMLElement> => {
+const createImage = (title: string, classes: string, src?: string | null, filename?: string | null): JQuery<HTMLElement> => {
     const $icon = $('<img/>')
         .attr('alt', title)
         .attr('title', title)
@@ -134,6 +144,7 @@ const createImage = (title: string, classes: string, src?: string|null, filename
     return $icon;
 };
 
+
 /**
  * Create the modal element.
  * 
@@ -141,7 +152,25 @@ const createImage = (title: string, classes: string, src?: string|null, filename
  * @param {JQuery<HTMLElement>=} h5pelement?
  * @returns {void}
  */
-const createModal = (config: Config, h5pelement?: JQuery<HTMLElement>) : void => {
+const createHoverEvent = (element?: JQuery<HTMLElement>): void => {
+    element.on("mouseenter", () => {
+        element.find(".h5p-download").fadeIn();
+    });
+
+    element.on("mouseleave", () => {
+        element.find(".h5p-download").fadeOut();
+    });
+}
+
+
+/**
+ * Create the modal element.
+ * 
+ * @param {Config} config
+ * @param {JQuery<HTMLElement>=} h5pelement?
+ * @returns {void}
+ */
+const createModal = (config: Config, h5pelement?: JQuery<HTMLElement>): void => {
     // The modal surrounding overlay.
     const $modalOverlay = createElement('div', 'download-overlay');
     // The modal container.
@@ -169,12 +198,12 @@ const createModal = (config: Config, h5pelement?: JQuery<HTMLElement>) : void =>
     config.downloadURL ? $columnRight.append($rightContent) : null;
 
     const $modalContent = createElement('div', 'content')
-                            .append($columnLeft)
-                            .append($columnRight);
+        .append($columnLeft)
+        .append($columnRight);
 
     $modal.html(`<h4>${config.modalTitle}</h4>`)
-          .append($modalContent)
-          .append($closeButton);
+        .append($modalContent)
+        .append($closeButton);
     $modalOverlay.append($modal);
 
     // Append to the body
@@ -182,13 +211,14 @@ const createModal = (config: Config, h5pelement?: JQuery<HTMLElement>) : void =>
     $(body).append($modalOverlay);
 };
 
+
 /**
  * Generate the licence informations block to render.
  * 
  * @param {Config} config
  * @returns {string}
  */
-const createLicenceInfos = (config: Config) : string => {
+const createLicenceInfos = (config: Config): string => {
     if (config.licenceTarget) {
         const $licenceElement = $('#' + config.licenceTarget);
         if ($licenceElement && $licenceElement.attr('href')) {
@@ -211,6 +241,7 @@ const createLicenceInfos = (config: Config) : string => {
     `;
 };
 
+
 /**
  * Create the download button.
  * 
@@ -220,15 +251,18 @@ const createLicenceInfos = (config: Config) : string => {
  * @param {JQuery<HTMLElement>=} h5pelement?
  * @returns {JQuery<HTMLButtonElement>}
  */
-const createDownloadButton = (type: string, classes: string, config: Config, h5pelement?: JQuery<HTMLElement>) : JQuery<HTMLElement> => {
+const createDownloadButton = (type: string, classes: string, config: Config, h5pelement?: JQuery<HTMLElement>): JQuery<HTMLElement> => {
     const wrapper = createElement('div', 'h5p-download-wrapper', '');
     const element = document.createElement(type) as HTMLButtonElement;
+
     element.className = classes;
     $(element).append(createImage(config.downloadText, 'icon', null, 'download'))
         .on('click', () => { createModal(config, h5pelement); });
     $(wrapper).append($(element));
+
     return $(wrapper);
 };
+
 
 /**
  * Retrieve the H5P file URL.
@@ -237,7 +271,7 @@ const createDownloadButton = (type: string, classes: string, config: Config, h5p
  * @param {Config} config
  * @returns {string|null}
  */
-const getDownloadURL = (element: JQuery<HTMLElement>, config: Config) : string|null => {
+const getDownloadURL = (element: JQuery<HTMLElement>, config: Config): string | null => {
     if (config.isHVP) {
         const hvpobject = window.H5PIntegration as any;
         const hvpcontents = Object.values(hvpobject['contents'])[0] as H5PIntegrationContent;
