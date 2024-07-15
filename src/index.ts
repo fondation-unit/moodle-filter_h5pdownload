@@ -139,6 +139,7 @@ const createHoverEvent = (element: JQuery<HTMLElement>): void => {
     element.on("mousemove", (event) => {
         mouseY = event.pageY;
         console.log(mouseY);
+        console.log($(this));
     });
 
     element.on("mouseenter", () => {
