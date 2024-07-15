@@ -134,16 +134,19 @@ const createImage = (title: string, classes: string, src?: string | null, filena
  * @returns {void}
  */
 const createHoverEvent = (element: JQuery<HTMLElement>): void => {
-    element.on("mouseenter", () => {
-        $(this).find(".h5p-download").fadeIn();
+    element.on("mouseenter", (event) => {
+        const mouseY = event.clientY;
+        const downloadElement = $(event.currentTarget).find(".h5p-download");
+
+        downloadElement.css({
+            display: 'block',
+            position: 'absolute',
+            top: mouseY + 'px'
+        }).fadeIn();
     });
 
     element.on("mouseleave", () => {
         $(this).find(".h5p-download").fadeOut();
-    });
-
-    element.on("mousemove", (event) => {
-        $(this).find(".h5p-download").css('left', event.pageX + 'px');
     });
 }
 
