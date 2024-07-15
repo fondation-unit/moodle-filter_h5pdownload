@@ -73,7 +73,6 @@ const handleH5Pelement = (h5pelement: HTMLElement, config: Config): void => {
     config.downloadURL = getDownloadURL($(h5pelement), config);
     const $button = createDownloadButton('button', 'h5p-download', config);
 
-    createHoverEvent($h5pelement);
     addButtonToH5PElement($h5pelement, $button);
 };
 
@@ -125,30 +124,6 @@ const createImage = (title: string, classes: string, src?: string | null, filena
     }
     return $icon;
 };
-
-
-/**
- * Attach the hover event to the H5P element.
- * 
- * @param {JQuery<HTMLElement>} h5pelement
- * @returns {void}
- */
-const createHoverEvent = (element: JQuery<HTMLElement>): void => {
-    element.on("mouseenter", (event) => {
-        const iframePosition = element.parent().find('iframe').position();
-        const mouseY = event.clientY + iframePosition.top;
-
-        element.find(".h5p-download").css({
-            display: 'block',
-            position: 'absolute',
-            top: mouseY + 'px'
-        }).fadeIn();
-    });
-
-    element.on("mouseleave", () => {
-        element.find(".h5p-download").fadeOut();
-    });
-}
 
 
 /**
