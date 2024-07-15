@@ -16,9 +16,6 @@ This plugin adds a button at the bottom of H5P activities on a Moodle page. When
 >);
 > ```
 
-## Setup
-
-Set the filter to **On** for both **contents and title** in Moodle administration, at `/admin/filters.php`.
 
 ## Settings
 
@@ -34,13 +31,21 @@ Set the filter to **On** for both **contents and title** in Moodle administratio
 | licence_url      | the default licence URL, used if no target element is found using the HTML ID from the `licence_target` setting |
 
 
+## How to use the filter
+
+1. Fill in the various settings from the previous step. Don't forget to fill in the settings of [block_informations](https://github.com/fondation-unit/moodle-block_informations) as well.
+2. Set the filter to `On` (or `Off, but available`) for `Content and headings` in Moodle administration, at `/admin/filters.php`.
+3. If you have chosen the setting `Off, but available`, you can activate the filter in a course category or within a course through the settings.
+4. If the filter is active in a course, you should see download buttons at the bottom of each H5P activity.
+
+
 ## Development
 
 Run the watch mode for both CSS and JS :
 
 `grunt watch`
 
-### Styling
+#### Styling
 
 Stylesheets are located in the `sass` folder.
 
@@ -48,7 +53,7 @@ Compile the CSS :
 
 `grunt webpack`
 
-### Javascript
+#### Javascript
 
 The typescript files are located in the `src` folder.
 
