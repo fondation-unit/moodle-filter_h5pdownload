@@ -32,7 +32,6 @@
   -moz-box-shadow: 0 0 3px #76bbff;
   -webkit-box-shadow: 0 0 3px #76bbff;
   box-shadow: 0 0 3px #76bbff;
-  transform: scale(1.15);
   outline: 0;
 }
 .h5p-download-wrapper .h5p-download:hover .icon {
