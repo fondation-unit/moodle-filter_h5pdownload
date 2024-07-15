@@ -135,7 +135,9 @@ const createImage = (title: string, classes: string, src?: string | null, filena
  */
 const createHoverEvent = (element: JQuery<HTMLElement>): void => {
     element.on("mouseenter", (event) => {
-        const mouseY = event.clientY + window.scrollY;
+        const iframePosition = element.parent().find('iframe').position();
+        const mouseY = event.clientY + iframePosition.top;
+
         element.find(".h5p-download").css({
             display: 'block',
             position: 'absolute',
