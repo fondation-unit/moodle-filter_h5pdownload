@@ -39,7 +39,7 @@ const init = (config: Config): void => {
     const searchElement: number = window.setInterval(() => {
         const mod_h5pactivity = document.querySelector('.h5p-player') as HTMLIFrameElement | null;
         const mod_hvp = document.querySelector('.h5p-iframe-wrapper') as HTMLElement | null;
-        const inline_hvp = document.querySelectorAll('.h5p-placeholder') as NodeListOf<HTMLElement> | null;
+        const inline_hvps = document.querySelectorAll('.h5p-placeholder') as NodeListOf<HTMLElement> | null;
 
         if (mod_h5pactivity !== null && mod_h5pactivity.parentElement !== null) {
             handleH5Pelement(mod_h5pactivity.parentElement, config);
@@ -51,8 +51,10 @@ const init = (config: Config): void => {
             clearInterval(searchElement);
         }
 
-        if (inline_hvp !== null) {
-            handleMultipleH5Pelements(inline_hvp, config);
+        if (inline_hvps !== null) {
+            inline_hvps.forEach(element => {
+                handleH5Pelement(element, config);
+            });
             clearInterval(searchElement);
         }
     }, SEARCH_TIMER);
@@ -73,26 +75,6 @@ const handleH5Pelement = (h5pelement: HTMLElement, config: Config): void => {
 
     createHoverEvent($h5pelement);
     addButtonToH5PElement($h5pelement, $button);
-};
-
-
-/**
- * Add the download button over the H5P list of elements.
- * This case occurs when H5P is inserted within Moodle's Atto editor.
- * 
- * @param {HTMLElement} h5pelement
- * @param {Config} config
- * @returns {void}
- */
-const handleMultipleH5Pelements = (h5pelements: NodeListOf<HTMLElement>, config: Config): void => {
-    h5pelements.forEach(element => {
-        const $h5pelement = $(element) as JQuery<HTMLElement>;
-        config.downloadURL = getDownloadURL($(element), config);
-        const $button = createDownloadButton('button', 'h5p-download', config, $(element));
-
-        createHoverEvent($h5pelement);
-        addButtonToH5PElement($(element), $button);
-    });
 };
 
 
@@ -146,19 +128,29 @@ const createImage = (title: string, classes: string, src?: string | null, filena
 
 
 /**
- * Create the modal element.
+ * Attach the hover event to the H5P element.
  * 
- * @param {Config} config
- * @param {JQuery<HTMLElement>=} h5pelement?
+ * @param {JQuery<HTMLElement>} h5pelement
  * @returns {void}
  */
-const createHoverEvent = (element?: JQuery<HTMLElement>): void => {
+const createHoverEvent = (element: JQuery<HTMLElement>): void => {
     element.on("mouseenter", () => {
-        element.find(".h5p-download").fadeIn();
+        $(this).find(".h5p-download").fadeIn();
     });
 
     element.on("mouseleave", () => {
-        element.find(".h5p-download").fadeOut();
+        $(this).find(".h5p-download").fadeOut();
+    });
+
+    element.on("mousemove", () => {
+        const downloadElement = $(this).find(".h5p-download");
+        const offset = 15;
+        const parentOffset = $(this).offset();
+
+        downloadElement.css({
+            left: parentOffset.left + $(this).width() + offset + 'px',
+            top: parentOffset.top + 'px'
+        });
     });
 }
 
