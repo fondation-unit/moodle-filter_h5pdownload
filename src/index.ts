@@ -41,14 +41,14 @@ const init = (config: Config): void => {
         const inline_hvps = document.querySelectorAll('.h5p-placeholder') as NodeListOf<HTMLElement> | null;
 
         if (mod_h5pactivity !== null && mod_h5pactivity.parentElement !== null) {
-            handleH5Pelement(mod_h5pactivity.parentElement, config);
+            handleH5Pelement(mod_h5pactivity.parentElement.parentElement, config);
             clearInterval(searchElement);
         }
 
 
         if (inline_hvps !== null) {
             inline_hvps.forEach(element => {
-                handleH5Pelement(element, config);
+                handleH5Pelement(element.parentElement, config);
             });
             clearInterval(searchElement);
         }
@@ -57,7 +57,7 @@ const init = (config: Config): void => {
             const mod_hvp = document.querySelector('.h5p-iframe-wrapper') as HTMLElement | null;
 
             if (mod_hvp !== null) {
-                handleH5Pelement(mod_hvp.parentElement, config);
+                handleH5Pelement(mod_hvp.parentElement.parentElement, config);
                 clearInterval(searchElement);
             }
         }
