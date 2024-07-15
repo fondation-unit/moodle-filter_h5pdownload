@@ -101,6 +101,7 @@ const createElement = (type: string, classes: string, text?: string | null): JQu
     const element = document.createElement(type) as HTMLElement;
     element.className = classes;
     element.innerHTML = text || '';
+
     return $(element);
 };
 
@@ -184,6 +185,7 @@ const createModal = (config: Config, h5pelement?: JQuery<HTMLElement>): void => 
 const createLicenceInfos = (config: Config): string => {
     if (config.licenceTarget) {
         const $licenceElement = $('#' + config.licenceTarget);
+
         if ($licenceElement && $licenceElement.attr('href')) {
             // Get the licence infos.
             config.licenceName = $licenceElement.data('name');
@@ -192,16 +194,14 @@ const createLicenceInfos = (config: Config): string => {
         }
     }
 
-    return `
-        ${config.licenceIntro} 
+    return `${config.licenceIntro} 
         <a href="${config.licenceUrl}" target="_blank">
             ${config.licenceName}
             <img src="${config.licenceImage}" class="licence-image" alt="${config.licenceName}">
         </a>
         <div class="licence" style="background-color:${config.backgroundColor};color:${config.textColor}">
             <span>${config.licenceToUse} : ${config.licenceName}</span>
-        </div>
-    `;
+        </div>`;
 };
 
 
@@ -220,7 +220,7 @@ const createDownloadButton = (type: string, classes: string, config: Config, h5p
 
     element.className = classes;
     $(element).append(createImage(config.downloadText, 'icon', null, 'download'))
-        .on('click', () => { createModal(config, h5pelement); });
+        .on('click', () => createModal(config, h5pelement));
     $(wrapper).append($(element));
 
     return $(wrapper);
@@ -243,6 +243,7 @@ const getDownloadURL = (element: JQuery<HTMLElement>, config: Config): string | 
     }
 
     let src = element.find(".h5p-iframe").attr("src");
+
     if (src && src.length > 0 && src != 'about:blank') {
         return decodeURIComponent(src.split(EMBED_URL)[1].split(H5P_EXTENSION)[0] + H5P_EXTENSION);
     } else {
