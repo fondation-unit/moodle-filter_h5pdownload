@@ -142,15 +142,8 @@ const createHoverEvent = (element: JQuery<HTMLElement>): void => {
         $(this).find(".h5p-download").fadeOut();
     });
 
-    element.on("mousemove", () => {
-        const downloadElement = $(this).find(".h5p-download");
-        const offset = 15;
-        const parentOffset = $(this).offset();
-
-        downloadElement.css({
-            left: parentOffset.left + $(this).width() + offset + 'px',
-            top: parentOffset.top + 'px'
-        });
+    element.on("mousemove", (event) => {
+        $(this).find(".h5p-download").css('left', event.pageX + 'px');
     });
 }
 
