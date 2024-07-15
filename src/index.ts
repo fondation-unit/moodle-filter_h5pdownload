@@ -38,7 +38,6 @@ const init = (config: Config): void => {
      */
     const searchElement: number = window.setInterval(() => {
         const mod_h5pactivity = document.querySelector('.h5p-player') as HTMLIFrameElement | null;
-        const mod_hvp = document.querySelector('.h5p-iframe-wrapper') as HTMLElement | null;
         const inline_hvps = document.querySelectorAll('.h5p-placeholder') as NodeListOf<HTMLElement> | null;
 
         if (mod_h5pactivity !== null && mod_h5pactivity.parentElement !== null) {
@@ -46,16 +45,21 @@ const init = (config: Config): void => {
             clearInterval(searchElement);
         }
 
-        if (mod_hvp !== null) {
-            handleH5Pelement(mod_hvp.parentElement, config);
-            clearInterval(searchElement);
-        }
 
         if (inline_hvps !== null) {
             inline_hvps.forEach(element => {
                 handleH5Pelement(element, config);
             });
             clearInterval(searchElement);
+        }
+
+        if (mod_h5pactivity == null && inline_hvps == null) {
+            const mod_hvp = document.querySelector('.h5p-iframe-wrapper') as HTMLElement | null;
+
+            if (mod_hvp !== null) {
+                handleH5Pelement(mod_hvp.parentElement, config);
+                clearInterval(searchElement);
+            }
         }
     }, SEARCH_TIMER);
 };
