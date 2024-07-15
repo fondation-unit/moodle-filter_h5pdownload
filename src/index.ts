@@ -135,13 +135,14 @@ const createImage = (title: string, classes: string, src?: string | null, filena
  */
 const createHoverEvent = (element: JQuery<HTMLElement>): void => {
     element.on("mouseenter", (event) => {
-        const mouseY = event.clientY;
+        const parentRect = $(this).parent()[0].getBoundingClientRect(); // Get the iframe's position and dimensions
+        const mouseY = event.clientY - parentRect.top; // Calculate mouseY relative to the iframe
         const downloadElement = $(event.currentTarget).find(".h5p-download");
 
         downloadElement.css({
             display: 'block',
             position: 'absolute',
-            top: mouseY + 'px'
+            top: mouseY + 'px' // Position the element at the same vertical position as the cursor within the iframe
         }).fadeIn();
     });
 
