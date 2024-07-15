@@ -18,15 +18,15 @@
  * Display H5P download pop-up
  *
  * @package    filter_h5pdownload
- * @copyright  2022 Pierre Duverneix - Fondation UNIT
+ * @copyright  2024 Pierre Duverneix - Fondation UNIT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2022101100;
+$plugin->version   = 2024071500;
 $plugin->requires  = 2020061500;
-$plugin->release = '1.0.1';
+$plugin->release = '1.0.2';
 $plugin->component = 'filter_h5pdownload';
 $plugin->dependencies = array(
     'block_informations' => ANY_VERSION

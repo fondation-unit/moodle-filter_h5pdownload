@@ -18,7 +18,7 @@
  * Display H5P download pop-up
  *
  * @package    filter_h5pdownload
- * @copyright  2022 Pierre Duverneix - Fondation UNIT
+ * @copyright  2024 Pierre Duverneix - Fondation UNIT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

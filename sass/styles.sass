@@ -4,8 +4,10 @@
     width: 100%
     padding: 5px
     .h5p-download
+        display: flex
+        align-items: center
+        justify-content: center
         +bg-shadow($bg-color, $main-color)
-        margin-top: $button-margin
         width: $btn-width
         height: $btn-width
         text-align: center
@@ -17,18 +19,18 @@
         transition: transform $duration linear, color $duration linear, background-color $duration linear, box-shadow $duration linear
         &:hover
             +bg-shadow($btn-active-bg, $btn-shadow)
-            transform: scale(1.15)
             outline: 0
-            .icon 
+            .icon
                 color: white
                 filter: brightness(0) invert(1)
         &:focus
             outline: 0
         .icon
-            +d-flex(center)
             width: 100%
-            margin: 0
-    
+            margin: 0 auto
+            width: 100%
+            border-radius: 0 !important
+
 .download-overlay
     +d-flex(center)
     position: fixed
@@ -60,7 +62,7 @@
             margin: 0
             width: calc($btn-width / 2)
             height: calc($btn-width / 2)
-        
+
 .download-modal
     position: relative
     align-self: center
@@ -84,7 +86,7 @@
             flex-basis: 100%
             padding-left: $modal-padding
             padding-right: $modal-padding
-            .mt-2 
+            .mt-2
                 margin-top: 0.5rem !important
             .licence-image
                 display: flex
@@ -107,7 +109,6 @@
                         filter: brightness(0) invert(1)
                 .modal-icon
                     width: 32px
-
 
 @media (max-width: 810px)
     .download-modal .content
