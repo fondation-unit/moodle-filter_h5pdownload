@@ -9,7 +9,7 @@
   padding: 5px;
 }
 .h5p-download-wrapper .h5p-download {
-  display: block;
+  display: block !important;
   position: absolute;
   background-color: #f0f1fc;
   -moz-box-shadow: 0 0 3px #1a237e;
