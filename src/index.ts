@@ -139,15 +139,15 @@ const createHoverEvent = (element: JQuery<HTMLElement>): void => {
     element.on("mousemove", (event) => {
         mouseY = event.pageY;
         console.log(mouseY);
-        console.log($(this));
+        console.log(element);
     });
 
     element.on("mouseenter", () => {
-        $(this).find(".h5p-download").css({ 'top': mouseY }).fadeIn();
+        element.find(".h5p-download").css({ 'top': mouseY }).fadeIn();
     });
 
     element.on("mouseleave", () => {
-        $(this).find(".h5p-download").fadeOut();
+        element.find(".h5p-download").fadeOut();
     });
 }
 
